@@ -8,6 +8,7 @@ const initialState = {
 };
 // types
 const SET_COCKTAIL = "SET_COCKTAIL";
+const SET_COCKTAILS = "SET_COCKTAILS";
 
 //action
 export const setCocktails = function (str) {
@@ -22,11 +23,10 @@ export const setCocktails = function (str) {
       }`
     )
       .then((response) => {
-        console.log(response.data);
-        //   {
-        //   type: "SET_COCKTAILS",
-        //   payload: response.data.results,
-        // }
+        dispatch({
+          type: "SET_COCKTAILS",
+          payload: response.data.drinks,
+        });
       })
       .catch();
   };
@@ -37,8 +37,13 @@ const cocktailReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case SET_COCKTAIL:
       return { ...state, cocktailsToSearch: payload, loading: true };
-    // case SET_COCKTAILS:
-    // return { ...state, cocktailsToSearch: payload, loading: false, error: };
+    case SET_COCKTAILS:
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        cocktail: payload,
+      };
 
     default:
       return state;

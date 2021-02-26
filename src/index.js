@@ -34,14 +34,19 @@ document.getElementById("cocktailForm").onsubmit = (e) => {
 };
 
 function cocktailRender() {
-  const { cocktailsToSearch, loading } = store.getState().cocktails;
-  document.getElementById(
-    "titel"
-  ).innerText = store.getState().cocktails.cocktailsToSearch;
+  const { cocktailsToSearch, loading, cocktail } = store.getState().cocktails;
+  document.getElementById("titel").innerText = cocktailsToSearch;
   if (loading) {
     document.getElementById("loading").style.display = "block";
   } else {
     document.getElementById("loading").style.display = "none";
+  }
+  if (cocktail) {
+    document.getElementById("cocktailGrid").innerHTML = cocktail
+      .map((cocktail) => `<li>${cocktail.strDrink}</li>`)
+      .join("");
+  } else {
+    document.getElementById("cocktailGrid").style.display = "none";
   }
 }
 
